@@ -14,7 +14,8 @@
   "hideInEditor": false,
   "keywords": [],
   "dependencies": {
-    "com.unity.textmeshpro": "3.0.6"
+    "com.unity.textmeshpro": "3.0.6",
+    "com.unity.inputsystem": "1.4.4"
   },
   "repository": {
     "url": "https://github.com/MakotoStudio-Games/games.makotostudio.debugger.git",
