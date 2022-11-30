@@ -14,34 +14,37 @@ namespace MakotoStudio.Debugger.Views {
 		[SerializeField] private RectTransform contentView;
 		[SerializeField] private GameObject prefabComponentInfo;
 
-		private DevDebugGameObject m_DevGameObject;
+		private DevDebugObjectInformation m_DevObjectInformation;
 		private List<Component> m_Components;
 		private Light m_ComponentsInfomration = new();
 
-		public void SetDevGameObject(DevDebugGameObject devGameObject) {
-			m_DevGameObject = devGameObject;
-			viewTitle.text = m_DevGameObject.Name;
+		public void SetDevDebugGameObject(DevDebugObjectInformation devObjectInformation) {
+			m_DevObjectInformation = devObjectInformation;
+			viewTitle.text = m_DevObjectInformation.Name;
 		}
 
 		public void OnBarClickEnd() {
 			DevViewOrderHandler.Singleton.SetViewOnTop(this);
 		}
 
-		public void SetAtIndex(int newIndex) {
-			transform.SetSiblingIndex(newIndex);
+		public void SetAtSiblingIndex(int index) {
+			transform.SetSiblingIndex(index);
 		}
 
+		/// <summary>
+		///		Destroy View if no longer used
+		/// </summary>
 		public void SetActiveView() {
 			Destroy(gameObject);
 		}
 
 		public void LoadGameObjectComponents() {
 			btnLoadComponents.gameObject.SetActive(false);
-			StartCoroutine(InitComponents());
+			StartCoroutine(InitComponents(m_DevObjectInformation));
 		}
 
-		private IEnumerator InitComponents() {
-			foreach (var componentInfo in m_DevGameObject.AttatchedComponents) {
+		private IEnumerator InitComponents(DevDebugObjectInformation devObjectInformation) {
+			foreach (var componentInfo in devObjectInformation.AttatchedComponents) {
 				var go = Instantiate(prefabComponentInfo, contentView);
 				yield return go.GetComponent<DevGameObjectComponentInfo>().SetComponent(componentInfo);
 			}

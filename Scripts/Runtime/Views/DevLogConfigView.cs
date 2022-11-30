@@ -32,8 +32,8 @@ namespace MakotoStudio.Debugger.Views {
 			var index = transform.GetSiblingIndex();
 		}
 
-		public void SetAtIndex(int newIndex) {
-			transform.SetSiblingIndex(newIndex);
+		public void SetAtSiblingIndex(int index) {
+			transform.SetSiblingIndex(index);
 		}
 
 		public void SetActiveView() {
@@ -75,7 +75,7 @@ namespace MakotoStudio.Debugger.Views {
 		}
 
 		private void BtnOpenLogFileEvent() {
-			var logFilePath = DevMaterialUtil.Singleton.MsDebuggerSettings.LogPath;
+			var logFilePath = DevDebuggerSettingManager.Singleton.MsDebuggerSettings.LogPath;
 			Process.Start("notepad.exe", logFilePath);
 		}
 
@@ -105,6 +105,8 @@ namespace MakotoStudio.Debugger.Views {
 					Debug.unityLogger.filterLogType = LogType.Log;
 					break;
 			}
+
+			Debug.LogFormat(Debug.unityLogger.filterLogType, LogOption.None, this, "New Log Level");
 		}
 	}
 }

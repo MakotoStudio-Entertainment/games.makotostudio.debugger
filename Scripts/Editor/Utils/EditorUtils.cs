@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using MakotoStudio.Debugger.ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
 using UEditor = UnityEditor.Editor;
@@ -17,24 +16,16 @@ namespace MakotoStudio.Debugger.Editor.Utils {
 			}
 		}
 
+		public static T GetAssets<T>(string path) where T : Object {
+			return AssetDatabase.LoadAssetAtPath<T>(path);
+		}
+
 		public static T CreateAsset<T>(string path) where T : ScriptableObject {
 			var dataClass = CreateInstance<T>();
 			AssetDatabase.CreateAsset(dataClass, path);
 			AssetDatabase.Refresh();
 			AssetDatabase.SaveAssets();
 			return dataClass;
-		}
-
-		public static void UpdateDebuggerSettingAsset(MsDebuggerSettings msDebuggerSettings) {
-			AssetDatabase.SaveAssetIfDirty(msDebuggerSettings);
-			AssetDatabase.Refresh();
-			AssetDatabase.SaveAssets();
-		}
-
-		public static void CreateDebuggerSettingAsset(string path, MsDebuggerSettings msDebuggerSettings) {
-			AssetDatabase.CreateAsset(msDebuggerSettings, path);
-			AssetDatabase.Refresh();
-			AssetDatabase.SaveAssets();
 		}
 
 		private static string GetPackageFullPath() {

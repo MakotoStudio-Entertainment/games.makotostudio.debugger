@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace MakotoStudio.Debugger.Models {
 	[Serializable]
-	public class DevDebugGameObject {
+	public class DevDebugObjectInformation {
 		public GameObject GameObject;
-		public DevGameObject DevGameObject;
+		public MsDebuggerGameObject MsDebuggerGameObject;
 		public string Name;
 		public bool ActiveState;
 		public bool HighLightedState;

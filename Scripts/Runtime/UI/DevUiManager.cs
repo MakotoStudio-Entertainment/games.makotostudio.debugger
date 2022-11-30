@@ -5,7 +5,7 @@ using MakotoStudio.Debugger.Utils;
 using UnityEngine;
 
 namespace MakotoStudio.Debugger.UI {
-	[RequireComponent(typeof(DevMaterialUtil))]
+	[RequireComponent(typeof(DevDebuggerSettingManager))]
 	[RequireComponent(typeof(DevBuildEventHandler))]
 	public class DevUiManager : MonoBehaviour {
 		public static DevUiManager Singleton;

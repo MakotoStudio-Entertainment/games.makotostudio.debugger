@@ -11,28 +11,14 @@ namespace MakotoStudio.Debugger.Utils {
 		public event Action<Material> OnSetHighLightTagEvent;
 		public event Action OnResetHighLightTagEvent;
 
-		public event Action<Material> OnSetHighLightLayerEvent;
-		public event Action OnResetHighLightLayerEvent;
-
 		public void SetHighLightTagEvent() {
 			if (m_IsHighLightTag) {
 				OnResetHighLightTagEvent?.Invoke();
 				m_IsHighLightTag = false;
 			}
 			else {
-				OnSetHighLightTagEvent?.Invoke(DevMaterialUtil.Singleton.MsDebuggerSettings.defaultMaterial);
+				// OnSetHighLightTagEvent?.Invoke(DevMaterialUtil.Singleton.MsDebuggerSettings.defaultMaterial);
 				m_IsHighLightTag = true;
-			}
-		}
-
-		public void SetHighLightLayerEvent() {
-			if (m_IsHighLightLayer) {
-				OnResetHighLightLayerEvent?.Invoke();
-				m_IsHighLightLayer = false;
-			}
-			else {
-				OnSetHighLightLayerEvent?.Invoke(DevMaterialUtil.Singleton.MsDebuggerSettings.defaultLayerMaterial);
-				m_IsHighLightLayer = true;
 			}
 		}
 

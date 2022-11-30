@@ -32,20 +32,6 @@ namespace MakotoStudio.Debugger.Utils {
 			m_LastMousePosition = currentMousePosition;
 		}
 
-		private bool IsRectTransformInsideScreen(RectTransform rectTransform) {
-			var isInside = false;
-			var corners = new Vector3[4];
-			rectTransform.GetWorldCorners(corners);
-			var rect = new Rect(0, 0, Screen.width, Screen.height);
-			var visibleCorners = corners.Count(corner => rect.Contains(corner));
-
-			if (visibleCorners == 4) {
-				isInside = true;
-			}
-
-			return isInside;
-		}
-
 		public void OnPointerClick(PointerEventData pointerEventData) {
 			SetToFront();
 		}
@@ -60,6 +46,20 @@ namespace MakotoStudio.Debugger.Utils {
 
 		private void Awake() {
 			m_ViewOrder = rootWindow.GetComponent<IViewOrder>();
+		}
+
+		private bool IsRectTransformInsideScreen(RectTransform rectTransform) {
+			var isInside = false;
+			var corners = new Vector3[4];
+			rectTransform.GetWorldCorners(corners);
+			var rect = new Rect(0, 0, Screen.width, Screen.height);
+			var visibleCorners = corners.Count(corner => rect.Contains(corner));
+
+			if (visibleCorners == 4) {
+				isInside = true;
+			}
+
+			return isInside;
 		}
 	}
 }

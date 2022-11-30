@@ -92,11 +92,11 @@ namespace MakotoStudio.Debugger.Core {
 		}
 
 		private bool SpecialComponent(string componentName) =>
-			DevMaterialUtil.Singleton.MsDebuggerSettings.ComponentsNotDisableList.Find(c =>
+			DevDebuggerSettingManager.Singleton.MsDebuggerSettings.ComponentsNotDisableList.Find(c =>
 				componentName.ToLower().Equals(c.ToLower())) != null;
 
 		private bool NotDisplayProperty(string propertyName) =>
-			DevMaterialUtil.Singleton.MsDebuggerSettings.PropertiesToIgnore.Find(p =>
+			DevDebuggerSettingManager.Singleton.MsDebuggerSettings.PropertiesToIgnore.Find(p =>
 				propertyName.ToLower().Equals(p.ToLower())) != null;
 	}
 }

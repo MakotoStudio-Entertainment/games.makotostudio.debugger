@@ -19,29 +19,28 @@ namespace MakotoStudio.Debugger.Core {
 		private GameObject prefabGameObjectEditView;
 
 		private Transform m_RootTransform;
-		private DevDebugGameObject m_DevDebugGameObject;
+		private DevDebugObjectInformation m_DevDebugObjectInformation;
 		private TMP_Text m_BtnHighLightText;
 		private TMP_Text m_BtnDisableText;
-		private TMP_Text m_BtnEditText;
-		private DevGameObject m_DevGameObject;
+		private MsDebuggerGameObject m_MsDebuggerGameObject;
 		private bool m_IsEventSystem;
 
 
-		public void SetDevDebugGameObject(DevDebugGameObject value) {
-			m_DevDebugGameObject = value;
-			m_DevGameObject = m_DevDebugGameObject.GameObject.GetComponent<DevGameObject>();
+		public void SetDevDebugGameObject(DevDebugObjectInformation value) {
+			m_DevDebugObjectInformation = value;
+			m_MsDebuggerGameObject = m_DevDebugObjectInformation.GameObject.GetComponent<MsDebuggerGameObject>();
 			SetIsEventListener();
 
-			gameObjectName.text = m_DevDebugGameObject.Name;
-			gameObjectTag.text = m_DevDebugGameObject.Tag;
-			gameObjectLayer.text = m_DevDebugGameObject.Layer.ToString();
+			gameObjectName.text = m_DevDebugObjectInformation.Name;
+			gameObjectTag.text = m_DevDebugObjectInformation.Tag;
+			gameObjectLayer.text = m_DevDebugObjectInformation.Layer.ToString();
 
 			SetBtnDisableState();
 			SetBtnHighLightState();
 		}
 
 		private void SetIsEventListener() {
-			var eventSystem = m_DevDebugGameObject.GameObject.GetComponentInChildren<EventSystem>();
+			var eventSystem = m_DevDebugObjectInformation.GameObject.GetComponentInChildren<EventSystem>();
 			if (eventSystem) {
 				m_IsEventSystem = true;
 			}
@@ -64,39 +63,38 @@ namespace MakotoStudio.Debugger.Core {
 			var btnEventEdit = new Button.ButtonClickedEvent();
 			btnEventEdit.AddListener(OpenEditGameObjectViewEvent);
 			btnEditGameObject.onClick = btnEventEdit;
-			m_BtnEditText = btnEditGameObject.GetComponentInChildren<TMP_Text>();
 		}
 
 		private void OpenEditGameObjectViewEvent() {
 			var editWindow = Instantiate(prefabGameObjectEditView, m_RootTransform);
-			editWindow.GetComponent<DevGameObjectEditView>().SetDevGameObject(m_DevDebugGameObject);
+			editWindow.GetComponent<DevGameObjectEditView>().SetDevDebugGameObject(m_DevDebugObjectInformation);
 			editWindow.SetActive(true);
 		}
 
 		private void HighLightEvent() {
-			if (m_DevGameObject.GetIsHighLighted) {
-				m_DevGameObject.OnResetHighLightEvent();
+			if (m_MsDebuggerGameObject.GetIsHighLighted) {
+				m_MsDebuggerGameObject.OnResetHighLightEvent();
 			}
 			else {
-				m_DevGameObject.OnHighLightEvent(null);
+				m_MsDebuggerGameObject.OnHighLightEvent(null);
 			}
 
 			SetBtnHighLightState();
 		}
 
 		private void DisableGameObjectEvent() {
-			var activeState = !m_DevDebugGameObject.GameObject.activeSelf;
-			m_DevDebugGameObject.GameObject.SetActive(activeState);
+			var activeState = !m_DevDebugObjectInformation.GameObject.activeSelf;
+			m_DevDebugObjectInformation.GameObject.SetActive(activeState);
 			SetBtnDisableState();
 		}
 
 		private void SetBtnHighLightState() {
-			if (m_DevGameObject == null) {
+			if (m_MsDebuggerGameObject == null) {
 				btnGameObjectButtonHighLight.interactable = false;
 				return;
 			}
 
-			if (m_DevGameObject.GetIsHighLighted) {
+			if (m_MsDebuggerGameObject.GetIsHighLighted) {
 				m_BtnHighLightText.text = "Unhighlight";
 			}
 			else {
@@ -106,7 +104,7 @@ namespace MakotoStudio.Debugger.Core {
 
 		private void SetBtnDisableState() {
 			btnGameObjectButtonDisable.interactable = !m_IsEventSystem;
-			if (m_DevDebugGameObject.GameObject.activeSelf) {
+			if (m_DevDebugObjectInformation.GameObject.activeSelf) {
 				m_BtnDisableText.text = "Disable";
 			}
 			else {

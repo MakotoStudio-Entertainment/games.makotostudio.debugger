@@ -1,4 +1,10 @@
-﻿using MakotoStudio.Debugger.ScriptableObjects;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using MakotoStudio.Debugger.Constant;
+using MakotoStudio.Debugger.Models;
+using MakotoStudio.Debugger.ScriptableObjects;
 using UnityEditor;
 using UnityEngine;
 using UEditor = UnityEditor.Editor;
@@ -6,28 +12,91 @@ using UEditor = UnityEditor.Editor;
 namespace MakotoStudio.Debugger.Editor.Utils {
 	[CustomEditor(typeof(MsDebuggerSettings))]
 	public class SettingsUtil : UEditor {
+		private MsDebuggerSettings m_MSDebuggerSettings;
+		private MsMaterialSettings m_MaterialSettings;
+
+		private const string MaterialSettingsSavePath =
+			"Assets/MakotoStudioDebuggerResources/Resources/MaterialSettings.asset";
+
+		public void OnEnable() {
+			if (File.Exists(MaterialSettingsSavePath)) {
+				m_MaterialSettings = AssetDatabase.LoadAssetAtPath<MsMaterialSettings>(MaterialSettingsSavePath);
+			}
+		}
+
 		public override void OnInspectorGUI() {
 			DrawDefaultInspector();
 
-			MsDebuggerSettings devMaterialUtil = (MsDebuggerSettings) target;
+			m_MSDebuggerSettings = (MsDebuggerSettings) target;
 
 			var loadTagButtonName = "Load Tag List";
-			if (devMaterialUtil.DebugObjectTagColors.Count != 0) {
+			if (m_MSDebuggerSettings.DebugObjectTagColors is not {Count: 0}) {
 				loadTagButtonName = "Update tag list";
 			}
 
 			if (GUILayout.Button(loadTagButtonName)) {
-				devMaterialUtil.BtnLoadUpdateTagList();
+				BtnLoadUpdateTagList();
+			}
+		}
+
+		private void BtnLoadUpdateTagList() {
+			var tags = UnityEditorInternal.InternalEditorUtility.tags;
+			if (m_MSDebuggerSettings.DebugObjectTagColors == null) {
+				m_MSDebuggerSettings.DebugObjectTagColors = new List<DebugObjectColor>();
 			}
 
-			var loadLayerButtonName = "Load Layers List";
-			if (devMaterialUtil.DebugObjectLayerColors.Count != 0) {
-				loadLayerButtonName = "Update Layers list";
-			}
+			FindAndAddToList(m_MSDebuggerSettings.DebugObjectTagColors, tags);
+			RemoveNotExist(m_MSDebuggerSettings.DebugObjectTagColors, tags);
+			UpdateMaterial(m_MSDebuggerSettings.DebugObjectTagColors);
+		}
 
-			if (GUILayout.Button(loadLayerButtonName)) {
-				devMaterialUtil.BtnLoadUpdateLayerList();
+		private void FindAndAddToList(List<DebugObjectColor> debugObjectColors, string[] stringList) {
+			foreach (var s in stringList) {
+				if (debugObjectColors.Find(m => m.Name == s) == null) {
+					debugObjectColors.Add(new DebugObjectColor {
+						Name = s,
+						ColorMaterial = new Material(m_MaterialSettings.defaultMaterial)
+					});
+				}
 			}
+		}
+
+		private void RemoveNotExist(List<DebugObjectColor> debugObjectColors, string[] stringList) {
+			var toRemoveFromList = new List<DebugObjectColor>();
+			debugObjectColors.ForEach(t => {
+				var match = stringList.ToList().Find(m => m == t.Name);
+				if (match == null) {
+					toRemoveFromList.Add(t);
+				}
+			});
+			toRemoveFromList.ForEach(t => debugObjectColors.Remove(t));
+		}
+
+		private void UpdateMaterial(List<DebugObjectColor> debugObjectColors) {
+			debugObjectColors.ForEach(n => {
+				var debugObjectName = n.Name.Replace(" ", "");
+				if (debugObjectName == DefaultUnityTagLayerType.Untagged.ToString()) {
+					n.ColorMaterial = m_MaterialSettings.untaggedTagMaterial;
+				}
+				else if (debugObjectName == DefaultUnityTagLayerType.Respawn.ToString()) {
+					n.ColorMaterial = m_MaterialSettings.respawnTagMaterial;
+				}
+				else if (debugObjectName == DefaultUnityTagLayerType.Finished.ToString()) {
+					n.ColorMaterial = m_MaterialSettings.finishTagMaterial;
+				}
+				else if (debugObjectName == DefaultUnityTagLayerType.Player.ToString()) {
+					n.ColorMaterial = m_MaterialSettings.playerTagMaterial;
+				}
+				else if (debugObjectName == DefaultUnityTagLayerType.EditorOnly.ToString()) {
+					n.ColorMaterial = m_MaterialSettings.editorOnlyTagMaterial;
+				}
+				else if (debugObjectName == DefaultUnityTagLayerType.GameController.ToString()) {
+					n.ColorMaterial = m_MaterialSettings.gameControllerTagMaterial;
+				}
+				else if (debugObjectName == DefaultUnityTagLayerType.MainCamera.ToString()) {
+					n.ColorMaterial = m_MaterialSettings.mainCameraTagMaterial;
+				}
+			});
 		}
 	}
 }

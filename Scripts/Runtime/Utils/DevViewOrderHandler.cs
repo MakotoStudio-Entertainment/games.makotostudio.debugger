@@ -17,7 +17,7 @@ namespace MakotoStudio.Debugger.Utils {
 
 		public void SetViewOnTop(IViewOrder viewOrder) {
 			var viewsCount = gameObject.GetComponentsInChildren<IViewOrder>().Length;
-			viewOrder.SetAtIndex(viewsCount);
+			viewOrder.SetAtSiblingIndex(viewsCount);
 		}
 	}
 }
