@@ -16,17 +16,27 @@ namespace MakotoStudio.Debugger.Views {
 
 		private DevDebugObjectInformation m_DevObjectInformation;
 		private List<Component> m_Components;
-		private Light m_ComponentsInfomration = new();
 
+		/// <summary>
+		///  Set the DevGameObjectInformation in the GameObjectEditView
+		/// </summary>
+		/// <param name="devObjectInformation"></param>
 		public void SetDevDebugGameObject(DevDebugObjectInformation devObjectInformation) {
 			m_DevObjectInformation = devObjectInformation;
 			viewTitle.text = m_DevObjectInformation.Name;
 		}
 
-		public void OnBarClickEnd() {
+		/// <summary>
+		///		Set this viewOrder to the front
+		/// </summary>
+		public void SetToFront() {
 			DevViewOrderHandler.Singleton.SetViewOnTop(this);
 		}
 
+		/// <summary>
+		/// Set the game object to the sibling index
+		/// </summary>
+		/// <param name="index">Index to set.</param>
 		public void SetAtSiblingIndex(int index) {
 			transform.SetSiblingIndex(index);
 		}
@@ -38,10 +48,6 @@ namespace MakotoStudio.Debugger.Views {
 			Destroy(gameObject);
 		}
 
-		public void LoadGameObjectComponents() {
-			btnLoadComponents.gameObject.SetActive(false);
-			StartCoroutine(InitComponents(m_DevObjectInformation));
-		}
 
 		private IEnumerator InitComponents(DevDebugObjectInformation devObjectInformation) {
 			foreach (var componentInfo in devObjectInformation.AttatchedComponents) {
@@ -55,13 +61,12 @@ namespace MakotoStudio.Debugger.Views {
 		}
 
 		private void Awake() {
-			InitUi();
+			DebuggerUIUtil.BindButtonUnityAction(btnLoadComponents, LoadGameObjectComponents);
 		}
 
-		private void InitUi() {
-			var btnEventLoadComponents = new Button.ButtonClickedEvent();
-			btnEventLoadComponents.AddListener(LoadGameObjectComponents);
-			btnLoadComponents.onClick = btnEventLoadComponents;
+		private void LoadGameObjectComponents() {
+			btnLoadComponents.gameObject.SetActive(false);
+			StartCoroutine(InitComponents(m_DevObjectInformation));
 		}
 	}
 }

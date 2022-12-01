@@ -6,7 +6,11 @@ using UEditor = UnityEditor.Editor;
 namespace MakotoStudio.Debugger.Editor.Utils {
 	public class EditorUtils : UEditor {
 		private static string _PACKAGE_FULL_PATH;
-
+		
+		/// <summary>
+		/// Get Package full path
+		/// </summary>
+		/// <returns>The fully qualified location of path or null if not found</returns>
 		public static string PackageFullPath {
 			get {
 				if (string.IsNullOrEmpty(_PACKAGE_FULL_PATH))
@@ -16,18 +20,28 @@ namespace MakotoStudio.Debugger.Editor.Utils {
 			}
 		}
 
-		public static T GetAssets<T>(string path) where T : Object {
-			return AssetDatabase.LoadAssetAtPath<T>(path);
-		}
+		/// <summary>
+		/// Returns the first asset object of type type at given path assetPath.
+		/// </summary>
+		/// <param name="assetPath">Path of the asset to load.</param>
+		/// <typeparam name="T">Data type of the asset.</typeparam>
+		/// <returns>Object The asset matching the parameters.</returns>
+		public static T GetAssets<T>(string assetPath) where T : Object => AssetDatabase.LoadAssetAtPath<T>(assetPath);
 
-		public static T CreateAsset<T>(string path) where T : ScriptableObject {
+		/// <summary>
+		/// Returns the first asset object of type type at given path assetPath.
+		/// </summary>
+		///  <param name="assetPath">Path of the asset to load.</param>
+		/// <typeparam name="T">Data type of the asset.</typeparam>
+		/// <returns>Object The asset matching the parameters.</returns>
+		public static T CreateAsset<T>(string assetPath) where T : ScriptableObject {
 			var dataClass = CreateInstance<T>();
-			AssetDatabase.CreateAsset(dataClass, path);
+			AssetDatabase.CreateAsset(dataClass, assetPath);
 			AssetDatabase.Refresh();
 			AssetDatabase.SaveAssets();
 			return dataClass;
 		}
-
+		
 		private static string GetPackageFullPath() {
 			// Check for potential UPM package
 			string packagePath = Path.GetFullPath("Packages/games.makotostudio.debugger");

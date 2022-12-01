@@ -12,14 +12,12 @@ namespace MakotoStudio.Debugger.Core.PropertyTypes {
 		[SerializeField] private Toggle propertyToggle;
 
 		private bool m_LiveValueUpdate;
-
 		private DevComponentProperty m_DevComponentProperty;
 		private Toggle m_LiveViewToggle;
-
 		private PropertyInfo m_PropertyInfo;
 		private UObject m_Obj;
 		private bool m_PropertyValue;
-
+		
 		public void SetPropertyInfo(PropertyInfo propertyInfo, UObject obj) {
 			m_PropertyInfo = propertyInfo;
 			m_Obj = obj;
@@ -27,7 +25,7 @@ namespace MakotoStudio.Debugger.Core.PropertyTypes {
 		}
 
 		public void SetLiveUpdate(bool state) {
-			m_LiveViewToggle.isOn = true;
+			m_LiveViewToggle.isOn = state;
 		}
 
 		private void SetValue() {
@@ -47,7 +45,7 @@ namespace MakotoStudio.Debugger.Core.PropertyTypes {
 
 		private void Awake() {
 			m_DevComponentProperty = gameObject.GetComponentInParent<DevComponentProperty>();
-			m_LiveViewToggle = m_DevComponentProperty.GetLiveViewToggle();
+			m_LiveViewToggle = m_DevComponentProperty.GetLiveViewToggle;
 			m_LiveValueUpdate = m_LiveViewToggle.isOn;
 
 			var toggleEvent = new Toggle.ToggleEvent();

@@ -17,11 +17,17 @@ namespace MakotoStudio.Debugger.ScriptableObjects {
 		[SerializeField] private List<DebugObjectColor> debugObjectTagColors;
 
 
+		/// <summary>
+		/// LogType Property
+		/// </summary>
 		public LogType LogType {
 			get => logType;
 			set => logType = value;
 		}
 
+		/// <summary>
+		/// LogPath Property
+		/// </summary>
 		public string LogPath {
 			get {
 				if (string.IsNullOrWhiteSpace(logPath)) {
@@ -33,21 +39,33 @@ namespace MakotoStudio.Debugger.ScriptableObjects {
 			set => logPath = value;
 		}
 
+		/// <summary>
+		/// ComponentsToIgnoreList Property
+		/// </summary>
 		public List<string> ComponentsToIgnoreList {
 			get => componentsToIgnoreList;
 			set => componentsToIgnoreList = value;
 		}
 
+		/// <summary>
+		/// ComponentsNotDisableList Property
+		/// </summary>
 		public List<string> ComponentsNotDisableList {
 			get => componentsNotDisableList;
 			set => componentsNotDisableList = value;
 		}
 
+		/// <summary>
+		/// PropertiesToIgnore Property
+		/// </summary>
 		public List<string> PropertiesToIgnore {
 			get => propertiesToIgnore;
 			set => propertiesToIgnore = value;
 		}
 
+		/// <summary>
+		/// DebugObjectTagColors Property
+		/// </summary>
 		public List<DebugObjectColor> DebugObjectTagColors {
 			get => debugObjectTagColors;
 			set => debugObjectTagColors = value;

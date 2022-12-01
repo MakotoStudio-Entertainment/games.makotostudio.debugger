@@ -1,13 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using MakotoStudio.Debugger.Core;
 using MakotoStudio.Debugger.Interfaces;
 using MakotoStudio.Debugger.Models;
-using MakotoStudio.Debugger.ScriptableObjects;
 using MakotoStudio.Debugger.Utils;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace MakotoStudio.Debugger.Views {
@@ -18,47 +14,41 @@ namespace MakotoStudio.Debugger.Views {
 		[SerializeField] private Button btnReloadListAllGameObjects;
 		[SerializeField] private RectTransform prefabGameObjectView;
 		[SerializeField] private RectTransform gameObjectView;
-		[SerializeField] private MsDebuggerSettings msDebuggerSettings;
 
-		public void OnBarClickEnd() {
+		/// <summary>
+		///		Set this viewOrder to the front
+		/// </summary>
+		public void SetToFront() {
 			DevViewOrderHandler.Singleton.SetViewOnTop(this);
 		}
 
+		/// <summary>
+		///		Set the game object to the sibling index
+		/// </summary>
+		/// <param name="index">Index to set.</param>
 		public void SetAtSiblingIndex(int index) {
 			transform.SetSiblingIndex(index);
 		}
 
+		/// <summary>
+		///		Set view active or inactive based on activeSelf
+		/// </summary>
 		public void SetActiveView() {
 			gameObject.SetActive(!gameObject.activeSelf);
 		}
 
 		private void Awake() {
-			InitUi();
-		}
-
-		private void InitUi() {
-			var listGoEvent = new Button.ButtonClickedEvent();
-			listGoEvent.AddListener(ListAllGameObjectsEvent);
-			btnListAllGameObjects.onClick = listGoEvent;
-
-			var reloadListGoEvent = new Button.ButtonClickedEvent();
-			reloadListGoEvent.AddListener(ReloadALlGameObjectsEvent);
-			btnReloadListAllGameObjects.onClick = reloadListGoEvent;
-		}
-
-		private void ListAllGameObjectsEvent() {
-			btnListAllGameObjects.gameObject.SetActive(false);
-			InitGameObjectView();
-			btnReloadListAllGameObjects.interactable = true;
-		}
-
-		private void ReloadALlGameObjectsEvent() {
-			InitGameObjectView();
+			DebuggerUIUtil.BindButtonUnityAction(btnListAllGameObjects, () => {
+				btnListAllGameObjects.gameObject.SetActive(false);
+				InitGameObjectView();
+				btnReloadListAllGameObjects.interactable = true;
+			});
+			DebuggerUIUtil.BindButtonUnityAction(btnReloadListAllGameObjects, InitGameObjectView);
 		}
 
 		private void InitGameObjectView() {
 			DestroyAllExistingInView();
-			
+
 			GameObjectsUtil.GetAllGameObjectsInScene().ForEach(go => {
 				var newGo = Instantiate(prefabGameObjectView, gameObjectView);
 				var msDebuggerGameObject = go.GetComponent<MsDebuggerGameObject>();
@@ -68,7 +58,7 @@ namespace MakotoStudio.Debugger.Views {
 
 				newGo.gameObject.GetComponent<DevDebugGameObjectInfo>().SetDevDebugGameObject(new DevDebugObjectInformation {
 					GameObject = go,
-					MsDebuggerGameObject = msDebuggerGameObject,
+					MSDebuggerGameObject = msDebuggerGameObject,
 					Name = go.name,
 					ActiveState = go.activeSelf,
 					HighLightedState = false,

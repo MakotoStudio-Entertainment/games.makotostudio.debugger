@@ -20,6 +20,11 @@ namespace MakotoStudio.Debugger.Core {
 		private Component m_Component;
 		private PropertyInfo m_EnablePropertyInfo;
 
+		/// <summary>
+		///  Set the component to view
+		/// </summary>
+		/// <param name="componentInfo"></param>
+		/// <returns>yield null</returns>
 		public IEnumerator SetComponent(Component componentInfo) {
 			m_Component = componentInfo;
 			yield return InitView();
@@ -33,7 +38,7 @@ namespace MakotoStudio.Debugger.Core {
 			m_PropertyTypes = new List<IPropertyType>();
 
 			var toggleEventEnableLiveListeningProperty = new Toggle.ToggleEvent();
-			toggleEventEnableLiveListeningProperty.AddListener(ToggleEventEnableLiveListeningPropertyChangeEvent);
+			toggleEventEnableLiveListeningProperty.AddListener(EnableLiveListeningPropertyChangeEvent);
 			toggleEnableLiveListeningProperty.onValueChanged = toggleEventEnableLiveListeningProperty;
 			yield return GetPropertyValues();
 		}
@@ -42,20 +47,19 @@ namespace MakotoStudio.Debugger.Core {
 			m_EnablePropertyInfo.SetValue(m_Component, toggleEnableComponent.isOn);
 		}
 
-		private void ToggleEventEnableLiveListeningPropertyChangeEvent(bool arg0) {
+		private void EnableLiveListeningPropertyChangeEvent(bool arg0) {
 			m_PropertyTypes.ForEach(prop => prop?.SetLiveUpdate(toggleEnableLiveListeningProperty.isOn));
 		}
 
 		private IEnumerator GetPropertyValues() {
-			Type propertyType = m_Component.GetType();
+			var propertyType = m_Component.GetType();
 			componentName.text = propertyType.Name;
 
 			if (SpecialComponent(propertyType.Name)) {
 				toggleEnableComponent.interactable = false;
 			}
-
-			PropertyInfo[] propertyInfos = propertyType.GetProperties();
-			foreach (var propertyInfo in propertyInfos) {
+			
+			foreach (var propertyInfo in propertyType.GetProperties()) {
 				try {
 					if (propertyInfo.GetIndexParameters().Length == 0) {
 						SetProperty(propertyInfo);

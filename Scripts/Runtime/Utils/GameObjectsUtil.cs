@@ -1,21 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 namespace MakotoStudio.Debugger.Utils {
 	public static class GameObjectsUtil {
-		/// <summary>
-		///  Get all components on GameObject
-		/// </summary>
-		/// <param name="gameObject">GameObject </param>
-		/// <returns>List of components</returns>
-		public static List<Component> GameObjectComponentsLoader(GameObject gameObject) {
-			var components = new List<Component>();
-			gameObject.GetComponents(components);
-			return components;
-		}
-
 		/// <summary>
 		///  Find all game objects in current scene expect game objects with the DevIgnore layer mask
 		/// </summary>

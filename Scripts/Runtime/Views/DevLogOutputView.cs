@@ -14,13 +14,20 @@ namespace MakotoStudio.Debugger.Views {
 		[SerializeField] private uint maxLogSize = 15;
 		[SerializeField] private bool liveLogEnabled;
 		[SerializeField] private Button btnEnableLiveLog;
-		
+
 		private Queue m_LogQueue = new();
 
-		public void OnBarClickEnd() {
+		/// <summary>
+		///		Set this viewOrder to the front
+		/// </summary>
+		public void SetToFront() {
 			DevViewOrderHandler.Singleton.SetViewOnTop(this);
 		}
 
+		/// <summary>
+		///		Set the game object to the sibling index
+		/// </summary>
+		/// <param name="index">Index to set.</param>
 		public void SetAtSiblingIndex(int index) {
 			transform.SetSiblingIndex(index);
 		}
@@ -45,9 +52,7 @@ namespace MakotoStudio.Debugger.Views {
 		}
 
 		private void Awake() {
-			var logEnableButtonEvent = new Button.ButtonClickedEvent();
-			logEnableButtonEvent.AddListener(LiveLogStatus);
-			btnEnableLiveLog.onClick = logEnableButtonEvent;
+			DebuggerUIUtil.BindButtonUnityAction(btnEnableLiveLog, LiveLogStatus);
 		}
 
 		private void LiveLogStatus() {

@@ -5,7 +5,7 @@ using UnityEditor;
 namespace MakotoStudio.Debugger.Editor.MenuItems {
 	public static class MenuItemView {
 		[MenuItem("Tools/Makoto Studio Debugger/Import Resources", false, 2050)]
-		public static void ImportProjectResourcesMenu() {
+		private static void ImportProjectResourcesMenu() {
 			PackageUtils.ImportResources();
 		}
 

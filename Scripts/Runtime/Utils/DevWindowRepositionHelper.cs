@@ -2,19 +2,27 @@ using System.Linq;
 using MakotoStudio.Debugger.Interfaces;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace MakotoStudio.Debugger.Utils {
 	public class DevWindowRepositionHelper : MonoBehaviour, IDragHandler, IBeginDragHandler, IPointerClickHandler {
 		[SerializeField] private RectTransform rootWindow;
+		[SerializeField] private Button btnClose;
 
 		private Vector2 m_LastMousePosition;
 		private IViewOrder m_ViewOrder;
 
+		/// <summary>
+		/// Called by a BaseInputModule before a drag is started.
+		/// </summary>
 		public void OnBeginDrag(PointerEventData eventData) {
-			SetToFront();
+			m_ViewOrder.SetToFront();
 			m_LastMousePosition = eventData.position;
 		}
 
+		/// <summary>
+		/// When dragging is occurring this will be called every time the cursor is moved.
+		/// </summary>
 		public void OnDrag(PointerEventData eventData) {
 			var currentMousePosition = eventData.position;
 			var diff = currentMousePosition - m_LastMousePosition;
@@ -32,20 +40,16 @@ namespace MakotoStudio.Debugger.Utils {
 			m_LastMousePosition = currentMousePosition;
 		}
 
+		/// <summary>
+		/// Use this callback to detect clicks.
+		/// </summary>
 		public void OnPointerClick(PointerEventData pointerEventData) {
-			SetToFront();
-		}
-
-		private void SetToFront() {
-			m_ViewOrder.OnBarClickEnd();
-		}
-
-		public void SetActiveView() {
-			m_ViewOrder.SetActiveView();
+			m_ViewOrder.SetToFront();
 		}
 
 		private void Awake() {
 			m_ViewOrder = rootWindow.GetComponent<IViewOrder>();
+			DebuggerUIUtil.BindButtonUnityAction(btnClose, () => { m_ViewOrder.SetActiveView(); });
 		}
 
 		private bool IsRectTransformInsideScreen(RectTransform rectTransform) {

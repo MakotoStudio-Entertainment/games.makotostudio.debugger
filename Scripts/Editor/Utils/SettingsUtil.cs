@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using MakotoStudio.Debugger.Constant;
+using MakotoStudio.Debugger.Constants;
 using MakotoStudio.Debugger.Models;
 using MakotoStudio.Debugger.ScriptableObjects;
 using UnityEditor;
@@ -18,12 +18,9 @@ namespace MakotoStudio.Debugger.Editor.Utils {
 		private const string MaterialSettingsSavePath =
 			"Assets/MakotoStudioDebuggerResources/Resources/MaterialSettings.asset";
 
-		public void OnEnable() {
-			if (File.Exists(MaterialSettingsSavePath)) {
-				m_MaterialSettings = AssetDatabase.LoadAssetAtPath<MsMaterialSettings>(MaterialSettingsSavePath);
-			}
-		}
-
+		/// <summary>
+		/// Implement this function to make a custom inspector.
+		/// </summary>
 		public override void OnInspectorGUI() {
 			DrawDefaultInspector();
 
@@ -55,7 +52,7 @@ namespace MakotoStudio.Debugger.Editor.Utils {
 				if (debugObjectColors.Find(m => m.Name == s) == null) {
 					debugObjectColors.Add(new DebugObjectColor {
 						Name = s,
-						ColorMaterial = new Material(m_MaterialSettings.defaultMaterial)
+						ColorMaterial = new Material(m_MaterialSettings.DefaultMaterial)
 					});
 				}
 			}
@@ -75,28 +72,34 @@ namespace MakotoStudio.Debugger.Editor.Utils {
 		private void UpdateMaterial(List<DebugObjectColor> debugObjectColors) {
 			debugObjectColors.ForEach(n => {
 				var debugObjectName = n.Name.Replace(" ", "");
-				if (debugObjectName == DefaultUnityTagLayerType.Untagged.ToString()) {
-					n.ColorMaterial = m_MaterialSettings.untaggedTagMaterial;
+				if (debugObjectName == DefaultUnityTagType.Untagged.ToString()) {
+					n.ColorMaterial = m_MaterialSettings.UntaggedTagMaterial;
 				}
-				else if (debugObjectName == DefaultUnityTagLayerType.Respawn.ToString()) {
-					n.ColorMaterial = m_MaterialSettings.respawnTagMaterial;
+				else if (debugObjectName == DefaultUnityTagType.Respawn.ToString()) {
+					n.ColorMaterial = m_MaterialSettings.RespawnTagMaterial;
 				}
-				else if (debugObjectName == DefaultUnityTagLayerType.Finished.ToString()) {
-					n.ColorMaterial = m_MaterialSettings.finishTagMaterial;
+				else if (debugObjectName == DefaultUnityTagType.Finished.ToString()) {
+					n.ColorMaterial = m_MaterialSettings.FinishTagMaterial;
 				}
-				else if (debugObjectName == DefaultUnityTagLayerType.Player.ToString()) {
-					n.ColorMaterial = m_MaterialSettings.playerTagMaterial;
+				else if (debugObjectName == DefaultUnityTagType.Player.ToString()) {
+					n.ColorMaterial = m_MaterialSettings.PlayerTagMaterial;
 				}
-				else if (debugObjectName == DefaultUnityTagLayerType.EditorOnly.ToString()) {
-					n.ColorMaterial = m_MaterialSettings.editorOnlyTagMaterial;
+				else if (debugObjectName == DefaultUnityTagType.EditorOnly.ToString()) {
+					n.ColorMaterial = m_MaterialSettings.EditorOnlyTagMaterial;
 				}
-				else if (debugObjectName == DefaultUnityTagLayerType.GameController.ToString()) {
-					n.ColorMaterial = m_MaterialSettings.gameControllerTagMaterial;
+				else if (debugObjectName == DefaultUnityTagType.GameController.ToString()) {
+					n.ColorMaterial = m_MaterialSettings.GameControllerTagMaterial;
 				}
-				else if (debugObjectName == DefaultUnityTagLayerType.MainCamera.ToString()) {
-					n.ColorMaterial = m_MaterialSettings.mainCameraTagMaterial;
+				else if (debugObjectName == DefaultUnityTagType.MainCamera.ToString()) {
+					n.ColorMaterial = m_MaterialSettings.MainCameraTagMaterial;
 				}
 			});
+		}
+
+		private void OnEnable() {
+			if (File.Exists(MaterialSettingsSavePath)) {
+				m_MaterialSettings = AssetDatabase.LoadAssetAtPath<MsMaterialSettings>(MaterialSettingsSavePath);
+			}
 		}
 	}
 }

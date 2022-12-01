@@ -1,8 +1,10 @@
-﻿using MakotoStudio.Debugger.Models;
+﻿using System;
+using MakotoStudio.Debugger.Models;
 using MakotoStudio.Debugger.Utils;
 using MakotoStudio.Debugger.Views;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -26,8 +28,12 @@ namespace MakotoStudio.Debugger.Core {
 		private bool m_IsEventSystem;
 
 
-		public void SetDevDebugGameObject(DevDebugObjectInformation value) {
-			m_DevDebugObjectInformation = value;
+		/// <summary>
+		///  Set DevGameObjectInformation in the DevDebugGameObjectInfo
+		/// </summary>
+		/// <param name="devDebugObjectInformation"></param>
+		public void SetDevDebugGameObject(DevDebugObjectInformation devDebugObjectInformation) {
+			m_DevDebugObjectInformation = devDebugObjectInformation;
 			m_MsDebuggerGameObject = m_DevDebugObjectInformation.GameObject.GetComponent<MsDebuggerGameObject>();
 			SetIsEventListener();
 
@@ -46,23 +52,14 @@ namespace MakotoStudio.Debugger.Core {
 			}
 		}
 
-
 		private void Awake() {
 			m_RootTransform = DevViewOrderHandler.Singleton.gameObject.transform;
-			var btnEventHighLight = new Button.ButtonClickedEvent();
-			btnEventHighLight.AddListener(HighLightEvent);
-			btnGameObjectButtonHighLight.onClick = btnEventHighLight;
+			DebuggerUIUtil.BindButtonUnityAction(btnGameObjectButtonHighLight, HighLightEvent);
+			DebuggerUIUtil.BindButtonUnityAction(btnGameObjectButtonDisable, DisableGameObjectEvent);
+			DebuggerUIUtil.BindButtonUnityAction(btnEditGameObject, OpenEditGameObjectViewEvent);
+
 			m_BtnHighLightText = btnGameObjectButtonHighLight.GetComponentInChildren<TMP_Text>();
-
-
-			var btnDEventisable = new Button.ButtonClickedEvent();
-			btnDEventisable.AddListener(DisableGameObjectEvent);
-			btnGameObjectButtonDisable.onClick = btnDEventisable;
 			m_BtnDisableText = btnGameObjectButtonDisable.GetComponentInChildren<TMP_Text>();
-
-			var btnEventEdit = new Button.ButtonClickedEvent();
-			btnEventEdit.AddListener(OpenEditGameObjectViewEvent);
-			btnEditGameObject.onClick = btnEventEdit;
 		}
 
 		private void OpenEditGameObjectViewEvent() {

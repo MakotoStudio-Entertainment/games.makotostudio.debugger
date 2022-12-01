@@ -3,19 +3,29 @@ using UnityEngine;
 
 namespace MakotoStudio.Debugger.Utils {
 	public class DevDebuggerSettingManager : MonoBehaviour {
-		public static DevDebuggerSettingManager Singleton;
-		public MsDebuggerSettings MsDebuggerSettings => msDebuggerSettings;
+		private static DevDebuggerSettingManager _SINGLETON;
+		
 		[SerializeField] private MsDebuggerSettings msDebuggerSettings;
+		
+		/// <summary>
+		/// Get MsDebuggerSettings
+		/// </summary>
+		public MsDebuggerSettings MsDebuggerSettings => msDebuggerSettings;
+		
+		/// <summary>
+		/// Get instance of DevDebuggerSettingManager
+		/// </summary>
+		public static DevDebuggerSettingManager Singleton => _SINGLETON;
 
 		private void Awake() {
 			SetSingleton();
 		}
 
 		private void SetSingleton() {
-			if (Singleton == null)
-				Singleton = this;
+			if (_SINGLETON == null)
+				_SINGLETON = this;
 
-			if (Singleton != this)
+			if (_SINGLETON != this)
 				Destroy(gameObject);
 		}
 	}

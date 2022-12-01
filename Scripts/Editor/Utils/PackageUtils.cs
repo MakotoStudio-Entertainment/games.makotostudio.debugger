@@ -3,8 +3,11 @@ using UEditor = UnityEditor.Editor;
 
 namespace MakotoStudio.Debugger.Editor.Utils {
 	public class PackageUtils : UEditor {
+		/// <summary>
+		/// Start Import the package resources
+		/// </summary>
 		public static void ImportResources() {
-			string packageFullPath = EditorUtils.PackageFullPath;
+			var packageFullPath = EditorUtils.PackageFullPath;
 			AssetDatabase.ImportPackage(packageFullPath + "/PackageResources/MakotoStudioDebuggerResources.unitypackage",
 				true);
 		}

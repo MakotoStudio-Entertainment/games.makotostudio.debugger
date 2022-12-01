@@ -25,7 +25,7 @@ namespace MakotoStudio.Debugger.Core.PropertyTypes {
 		}
 
 		public void SetLiveUpdate(bool state) {
-			m_LiveViewToggle.isOn = true;
+			m_LiveViewToggle.isOn = state;
 		}
 
 		private void SetValue() {
@@ -41,7 +41,7 @@ namespace MakotoStudio.Debugger.Core.PropertyTypes {
 
 		private void Awake() {
 			m_DevComponentProperty = gameObject.GetComponentInParent<DevComponentProperty>();
-			m_LiveViewToggle = m_DevComponentProperty.GetLiveViewToggle();
+			m_LiveViewToggle = m_DevComponentProperty.GetLiveViewToggle;
 			m_LiveValueUpdate = m_LiveViewToggle.isOn;
 
 			var toggleEvent = new Toggle.ToggleEvent();

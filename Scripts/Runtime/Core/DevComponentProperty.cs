@@ -21,8 +21,17 @@ namespace MakotoStudio.Debugger.Core {
 		private PropertyInfo m_PropertyInfo;
 		private UObject m_Obj;
 
-		public Toggle GetLiveViewToggle() => liveValueViewToggle;
+		/// <summary>
+		///  Get Toggle fom component
+		/// </summary>
+		public Toggle GetLiveViewToggle => liveValueViewToggle;
 
+		/// <summary>
+		/// Instantiate Component Property
+		/// </summary>
+		/// <param name="propertyInfo">Property info</param>
+		/// <param name="obj">Unity Object from the component</param>
+		/// <returns>Property type</returns>
 		public IPropertyType Init(PropertyInfo propertyInfo, UObject obj) {
 			liveValueViewToggle.isOn = false;
 			m_PropertyInfo = propertyInfo;

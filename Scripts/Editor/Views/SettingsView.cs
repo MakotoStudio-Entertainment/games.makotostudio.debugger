@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using MakotoStudio.Debugger.Editor.Constants;
 using MakotoStudio.Debugger.Editor.Utils;
 using MakotoStudio.Debugger.ScriptableObjects;
 using Newtonsoft.Json;
@@ -26,6 +27,9 @@ namespace MakotoStudio.Debugger.Editor.Views {
 		private readonly List<RequiredResources> m_MissingResources = new();
 
 
+		/// <summary>
+		/// Instantiate a new MS Debugger Setting View
+		/// </summary>
 		public static void ShowSettingsView() {
 			_INSTANCE = (SettingsView) GetWindow(typeof(SettingsView));
 			_INSTANCE.titleContent = new GUIContent("Settings");
@@ -129,69 +133,69 @@ namespace MakotoStudio.Debugger.Editor.Views {
 
 		private void DrawMaterialSettingsGUI() {
 			EditorGUILayout.LabelField("Materials", WindowGUIStyle.GetSubHeaderStyle());
-			if (m_MaterialSettings.defaultMaterial == null) {
-				m_MaterialSettings.defaultMaterial =
+			if (m_MaterialSettings.DefaultMaterial == null) {
+				m_MaterialSettings.DefaultMaterial =
 					EditorUtils.GetAssets<Material>(Path.Combine(BaseMaterialSavePath, "defaultMaterial.mat"));
 			}
 
-			m_MaterialSettings.defaultMaterial = (Material) EditorGUILayout.ObjectField("Default Material",
-				m_MaterialSettings.defaultMaterial, typeof(Material));
+			m_MaterialSettings.DefaultMaterial = (Material) EditorGUILayout.ObjectField("Default Material",
+				m_MaterialSettings.DefaultMaterial, typeof(Material));
 
-			if (m_MaterialSettings.untaggedTagMaterial == null) {
-				m_MaterialSettings.untaggedTagMaterial =
+			if (m_MaterialSettings.UntaggedTagMaterial == null) {
+				m_MaterialSettings.UntaggedTagMaterial =
 					EditorUtils.GetAssets<Material>(Path.Combine(BaseMaterialSavePath, "untaggedTagMaterial.mat"));
 			}
 
-			m_MaterialSettings.untaggedTagMaterial = (Material) EditorGUILayout.ObjectField("Untagged Tag Material",
-				m_MaterialSettings.untaggedTagMaterial, typeof(Material));
+			m_MaterialSettings.UntaggedTagMaterial = (Material) EditorGUILayout.ObjectField("Untagged Tag Material",
+				m_MaterialSettings.UntaggedTagMaterial, typeof(Material));
 
-			if (m_MaterialSettings.respawnTagMaterial == null) {
-				m_MaterialSettings.respawnTagMaterial =
+			if (m_MaterialSettings.RespawnTagMaterial == null) {
+				m_MaterialSettings.RespawnTagMaterial =
 					EditorUtils.GetAssets<Material>(Path.Combine(BaseMaterialSavePath, "respawnTagMaterial.mat"));
 			}
 
-			m_MaterialSettings.respawnTagMaterial = (Material) EditorGUILayout.ObjectField("Respawn Tag Material",
-				m_MaterialSettings.respawnTagMaterial, typeof(Material));
+			m_MaterialSettings.RespawnTagMaterial = (Material) EditorGUILayout.ObjectField("Respawn Tag Material",
+				m_MaterialSettings.RespawnTagMaterial, typeof(Material));
 
-			if (m_MaterialSettings.finishTagMaterial == null) {
-				m_MaterialSettings.finishTagMaterial =
+			if (m_MaterialSettings.FinishTagMaterial == null) {
+				m_MaterialSettings.FinishTagMaterial =
 					EditorUtils.GetAssets<Material>(Path.Combine(BaseMaterialSavePath, "finishTagMaterial.mat"));
 			}
 
-			m_MaterialSettings.finishTagMaterial = (Material) EditorGUILayout.ObjectField("Finish Tag Material",
-				m_MaterialSettings.finishTagMaterial, typeof(Material));
+			m_MaterialSettings.FinishTagMaterial = (Material) EditorGUILayout.ObjectField("Finish Tag Material",
+				m_MaterialSettings.FinishTagMaterial, typeof(Material));
 
-			if (m_MaterialSettings.editorOnlyTagMaterial == null) {
-				m_MaterialSettings.editorOnlyTagMaterial =
+			if (m_MaterialSettings.EditorOnlyTagMaterial == null) {
+				m_MaterialSettings.EditorOnlyTagMaterial =
 					EditorUtils.GetAssets<Material>(Path.Combine(BaseMaterialSavePath, "editorOnlyTagMaterial.mat"));
 			}
 
-			m_MaterialSettings.editorOnlyTagMaterial = (Material) EditorGUILayout.ObjectField("Editor Only Tag Material",
-				m_MaterialSettings.editorOnlyTagMaterial, typeof(Material));
+			m_MaterialSettings.EditorOnlyTagMaterial = (Material) EditorGUILayout.ObjectField("Editor Only Tag Material",
+				m_MaterialSettings.EditorOnlyTagMaterial, typeof(Material));
 
-			if (m_MaterialSettings.mainCameraTagMaterial == null) {
-				m_MaterialSettings.mainCameraTagMaterial =
+			if (m_MaterialSettings.MainCameraTagMaterial == null) {
+				m_MaterialSettings.MainCameraTagMaterial =
 					EditorUtils.GetAssets<Material>(Path.Combine(BaseMaterialSavePath, "mainCameraTagMaterial.mat"));
 			}
 
-			m_MaterialSettings.mainCameraTagMaterial = (Material) EditorGUILayout.ObjectField("Main Camara Tag Material",
-				m_MaterialSettings.mainCameraTagMaterial, typeof(Material));
+			m_MaterialSettings.MainCameraTagMaterial = (Material) EditorGUILayout.ObjectField("Main Camara Tag Material",
+				m_MaterialSettings.MainCameraTagMaterial, typeof(Material));
 
-			if (m_MaterialSettings.playerTagMaterial == null) {
-				m_MaterialSettings.playerTagMaterial =
+			if (m_MaterialSettings.PlayerTagMaterial == null) {
+				m_MaterialSettings.PlayerTagMaterial =
 					EditorUtils.GetAssets<Material>(Path.Combine(BaseMaterialSavePath, "playerTagMaterial.mat"));
 			}
 
-			m_MaterialSettings.playerTagMaterial = (Material) EditorGUILayout.ObjectField("Player Tag Material",
-				m_MaterialSettings.playerTagMaterial, typeof(Material));
+			m_MaterialSettings.PlayerTagMaterial = (Material) EditorGUILayout.ObjectField("Player Tag Material",
+				m_MaterialSettings.PlayerTagMaterial, typeof(Material));
 
-			if (m_MaterialSettings.gameControllerTagMaterial == null) {
-				m_MaterialSettings.gameControllerTagMaterial =
+			if (m_MaterialSettings.GameControllerTagMaterial == null) {
+				m_MaterialSettings.GameControllerTagMaterial =
 					EditorUtils.GetAssets<Material>(Path.Combine(BaseMaterialSavePath, "gameControllerTagMaterial.mat"));
 			}
 
-			m_MaterialSettings.gameControllerTagMaterial = (Material) EditorGUILayout.ObjectField(
-				"Game Controller Tag Material", m_MaterialSettings.gameControllerTagMaterial, typeof(Material));
+			m_MaterialSettings.GameControllerTagMaterial = (Material) EditorGUILayout.ObjectField(
+				"Game Controller Tag Material", m_MaterialSettings.GameControllerTagMaterial, typeof(Material));
 		}
 
 		private void DrawCloseGUI() {
@@ -199,11 +203,5 @@ namespace MakotoStudio.Debugger.Editor.Views {
 				Close();
 			}
 		}
-	}
-
-	public enum RequiredResources {
-		Resources,
-		MaterialSettings,
-		DebuggerSettings
 	}
 }

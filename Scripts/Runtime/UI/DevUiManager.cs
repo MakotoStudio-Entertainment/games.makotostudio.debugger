@@ -1,31 +1,35 @@
 ﻿using System;
-using MakotoStudio.Debugger.Constant;
+using MakotoStudio.Debugger.Constants;
 using MakotoStudio.Debugger.UI.InputSystems;
 using MakotoStudio.Debugger.Utils;
 using UnityEngine;
 
 namespace MakotoStudio.Debugger.UI {
 	[RequireComponent(typeof(DevDebuggerSettingManager))]
-	[RequireComponent(typeof(DevBuildEventHandler))]
 	public class DevUiManager : MonoBehaviour {
-		public static DevUiManager Singleton;
+		private static DevUiManager _SINGLETON;
+
+		#region InputSystem
 
 		[Header("Input Keybinding")]
 #if ENABLE_LEGACY_INPUT_MANAGER && !ENABLE_INPUT_SYSTEM
     [HideInInspector]
 #endif
-		[SerializeField]
-		private string inputSystemKeyBinding = "<Keyboard>/f1";
+		[SerializeField] private string inputSystemKeyBinding = "<Keyboard>/f1";
 
 #if ENABLE_INPUT_SYSTEM || (ENABLE_INPUT_SYSTEM && ENABLE_LEGACY_INPUT_MANAGER)
 		[HideInInspector]
 #endif
-		[SerializeField]
-		private KeyCode legacyInputManagerKeyBinding = KeyCode.F1;
+		[SerializeField] private KeyCode legacyInputManagerKeyBinding = KeyCode.F1;
 
+		#endregion
 
 		[SerializeField] private GameObject devLogConfigView;
 
+		/// <summary>
+		/// Get instance of DevUiManager
+		/// </summary>
+		public static DevUiManager Singleton => _SINGLETON;
 
 		/// <summary>
 		///   Get the KeyBinding for the Input System Developer / Debug panel open event
@@ -37,28 +41,39 @@ namespace MakotoStudio.Debugger.UI {
 		/// </summary>
 		public KeyCode GetLegacyInputManagerKeyBinding => legacyInputManagerKeyBinding;
 
-		private IDevInputHelper m_DevInputHelper;
 		private ActiveInputSystemType m_ActiveInputSystemType;
 
-		public void OpenDevBuildPanel() {
+		/// <summary>
+		///  Set the Debugger Config View active based on activeSelf State
+		/// </summary>
+		public void SetDevConfigViewState() {
 			devLogConfigView.SetActive(!devLogConfigView.activeSelf);
 		}
-		
+
 		private void Awake() {
+			if (Application.isEditor) {
+				SetSingleton();
+				return;
+			}
+
 			if (!Debug.isDebugBuild) {
 				Debug.LogError("NO DEBUG BUILD");
 				Destroy(gameObject);
 				return;
 			}
 
-			if (Singleton == null) {
-				Singleton = this;
+			SetSingleton();
+		}
+
+		private void SetSingleton() {
+			if (_SINGLETON == null) {
+				_SINGLETON = this;
 				Debug.Log("DEBUG BUILD");
-				DontDestroyOnLoad(Singleton);
+				DontDestroyOnLoad(_SINGLETON);
 			}
 			else {
-				Debug.LogError("NO DEBUG BUILD");
-				Destroy(this);
+				Debug.LogError("Singleton already Exist");
+				Destroy(gameObject);
 			}
 		}
 
@@ -70,11 +85,11 @@ namespace MakotoStudio.Debugger.UI {
 		private void SetInputSystem() {
 			switch (m_ActiveInputSystemType) {
 				case ActiveInputSystemType.InputSystem:
-					m_DevInputHelper = gameObject.AddComponent<DevInputSystemHelper>();
+					gameObject.AddComponent<DevInputSystemHelper>();
 					gameObject.GetComponent<DevInputSystemHelper>().enabled = true;
 					break;
 				case ActiveInputSystemType.LegacyInputManager:
-					m_DevInputHelper = gameObject.AddComponent<DevLegacyInputManagerHelper>();
+					gameObject.AddComponent<DevLegacyInputManagerHelper>();
 					gameObject.GetComponent<DevLegacyInputManagerHelper>().enabled = true;
 					break;
 				default:

@@ -3,21 +3,30 @@ using UnityEngine;
 
 namespace MakotoStudio.Debugger.Utils {
 	public class DevViewOrderHandler : MonoBehaviour {
-		public static DevViewOrderHandler Singleton;
+		private static DevViewOrderHandler _SINGLETON;
 
-		private void Start() {
-			if (Singleton == null) {
-				Singleton = this;
-			}
+		/// <summary>
+		///  Get Instance of DevViewOrderHandler
+		/// </summary>
+		public static DevViewOrderHandler Singleton => _SINGLETON;
 
-			if (Singleton != this) {
-				Destroy(this);
-			}
-		}
-
+		/// <summary>
+		///  Set the viewOrder to the front
+		/// </summary>
+		/// <param name="viewOrder"></param>
 		public void SetViewOnTop(IViewOrder viewOrder) {
 			var viewsCount = gameObject.GetComponentsInChildren<IViewOrder>().Length;
 			viewOrder.SetAtSiblingIndex(viewsCount);
+		}
+
+		private void Start() {
+			if (_SINGLETON == null) {
+				_SINGLETON = this;
+			}
+
+			if (_SINGLETON != this) {
+				Destroy(this);
+			}
 		}
 	}
 }

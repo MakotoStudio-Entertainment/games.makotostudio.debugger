@@ -3,7 +3,11 @@ using UnityEngine.InputSystem;
 
 namespace MakotoStudio.Debugger.UI.InputSystems {
 	public class DevInputSystemHelper : MonoBehaviour, IDevInputHelper {
-		private InputAction m_OpenDevUiAction = new InputAction();
+		private readonly InputAction m_OpenDevUiAction = new ();
+
+		public void OpenDevUi(InputAction.CallbackContext callbackContext) {
+			DevUiManager.Singleton.SetDevConfigViewState();
+		}
 
 		private void Start() {
 			// Bind Developer Open Panel Key
@@ -19,10 +23,6 @@ namespace MakotoStudio.Debugger.UI.InputSystems {
 
 		private void OnDestroy() {
 			m_OpenDevUiAction.performed -= OpenDevUi;
-		}
-
-		public void OpenDevUi(InputAction.CallbackContext callbackContext) {
-			DevUiManager.Singleton.OpenDevBuildPanel();
 		}
 	}
 }

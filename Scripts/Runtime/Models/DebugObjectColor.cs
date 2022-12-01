@@ -7,11 +7,17 @@ namespace MakotoStudio.Debugger.Models {
 		[SerializeField] private string name;
 		[SerializeField] private Material colorMaterial;
 
+		/// <summary>
+		/// Name Property
+		/// </summary>
 		public string Name {
 			get => name;
 			set => name = value;
 		}
 
+		/// <summary>
+		/// ColorMaterial Property
+		/// </summary>
 		public Material ColorMaterial {
 			get => colorMaterial;
 			set => colorMaterial = value;

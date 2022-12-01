@@ -14,19 +14,11 @@ namespace MakotoStudio.Debugger.Core {
 			if (!Debug.isDebugBuild) {
 				Destroy(this);
 			}
-
-			DevBuildEventHandler.Singleton.OnSetHighLightTagEvent -= OnHighLightEvent;
-			DevBuildEventHandler.Singleton.OnSetHighLightTagEvent += OnHighLightEvent;
-
-			DevBuildEventHandler.Singleton.OnResetHighLightTagEvent -= OnResetHighLightEvent;
-			DevBuildEventHandler.Singleton.OnResetHighLightTagEvent += OnResetHighLightEvent;
 		}
 
-		private void OnDestroy() {
-			DevBuildEventHandler.Singleton.OnSetHighLightTagEvent -= OnHighLightEvent;
-			DevBuildEventHandler.Singleton.OnResetHighLightTagEvent -= OnResetHighLightEvent;
-		}
-
+		/// <summary>
+		/// 
+		/// </summary>
 		public void OnResetHighLightEvent() {
 			var meshRenderer = this.gameObject.GetComponent<MeshRenderer>();
 			if (m_IsNewAdded) {
@@ -38,8 +30,11 @@ namespace MakotoStudio.Debugger.Core {
 
 			m_IsHighLighted = false;
 		}
-
-
+		
+		/// <summary>
+		///  
+		/// </summary>
+		/// <param name="material"></param>
 		public void OnHighLightEvent(Material material) {
 			var meshRenderer = this.gameObject.GetComponent<MeshRenderer>();
 			var match = DevDebuggerSettingManager.Singleton.MsDebuggerSettings.DebugObjectTagColors.Find(m =>
