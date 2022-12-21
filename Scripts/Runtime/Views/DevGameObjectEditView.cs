@@ -8,6 +8,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace MakotoStudio.Debugger.Views {
+	/// <summary>
+	/// Game Object Edit view, displays all components on current game object
+	/// </summary>
 	public class DevGameObjectEditView : MonoBehaviour, IViewOrder {
 		[SerializeField] private Text viewTitle;
 		[SerializeField] private Button btnLoadComponents;
@@ -51,6 +54,9 @@ namespace MakotoStudio.Debugger.Views {
 
 		private IEnumerator InitComponents(DevDebugObjectInformation devObjectInformation) {
 			foreach (var componentInfo in devObjectInformation.AttatchedComponents) {
+				if (IgnoreComponent(componentInfo.GetType().Name))
+					continue;
+				
 				var go = Instantiate(prefabComponentInfo, contentView);
 				yield return go.GetComponent<DevGameObjectComponentInfo>().SetComponent(componentInfo);
 			}
@@ -68,5 +74,9 @@ namespace MakotoStudio.Debugger.Views {
 			btnLoadComponents.gameObject.SetActive(false);
 			StartCoroutine(InitComponents(m_DevObjectInformation));
 		}
+
+		private bool IgnoreComponent(string componentName) =>
+			DevDebuggerSettingManager.Singleton.MsDebuggerSettings.ComponentsToIgnoreList.Find(c =>
+				componentName.ToLower().Equals(c.ToLower())) != null;
 	}
 }

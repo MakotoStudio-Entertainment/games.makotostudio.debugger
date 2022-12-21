@@ -5,6 +5,9 @@ using MakotoStudio.Debugger.Utils;
 using UnityEngine;
 
 namespace MakotoStudio.Debugger.UI {
+	/// <summary>
+	/// Manages the configured input systems
+	/// </summary>
 	[RequireComponent(typeof(DevDebuggerSettingManager))]
 	public class DevUiManager : MonoBehaviour {
 		private static DevUiManager _SINGLETON;

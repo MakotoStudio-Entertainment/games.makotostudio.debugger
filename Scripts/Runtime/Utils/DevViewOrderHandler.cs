@@ -2,6 +2,9 @@
 using UnityEngine;
 
 namespace MakotoStudio.Debugger.Utils {
+	/// <summary>
+	/// View handler, manages the view order for all debugger views
+	/// </summary>
 	public class DevViewOrderHandler : MonoBehaviour {
 		private static DevViewOrderHandler _SINGLETON;
 

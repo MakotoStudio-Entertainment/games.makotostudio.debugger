@@ -6,7 +6,7 @@ using UEditor = UnityEditor.Editor;
 namespace MakotoStudio.Debugger.Editor.Utils {
 	public class EditorUtils : UEditor {
 		private static string _PACKAGE_FULL_PATH;
-		
+
 		/// <summary>
 		/// Get Package full path
 		/// </summary>
@@ -29,19 +29,19 @@ namespace MakotoStudio.Debugger.Editor.Utils {
 		public static T GetAssets<T>(string assetPath) where T : Object => AssetDatabase.LoadAssetAtPath<T>(assetPath);
 
 		/// <summary>
-		/// Returns the first asset object of type type at given path assetPath.
+		/// Saves and returns the asset object of type at given path assetPath.
 		/// </summary>
-		///  <param name="assetPath">Path of the asset to load.</param>
+		///  <param name="assetPath">Path of the asset to save.</param>
 		/// <typeparam name="T">Data type of the asset.</typeparam>
 		/// <returns>Object The asset matching the parameters.</returns>
 		public static T CreateAsset<T>(string assetPath) where T : ScriptableObject {
-			var dataClass = CreateInstance<T>();
-			AssetDatabase.CreateAsset(dataClass, assetPath);
+			var createdAsset = CreateInstance<T>();
+			AssetDatabase.CreateAsset(createdAsset, assetPath);
 			AssetDatabase.Refresh();
 			AssetDatabase.SaveAssets();
-			return dataClass;
+			return createdAsset;
 		}
-		
+
 		private static string GetPackageFullPath() {
 			// Check for potential UPM package
 			string packagePath = Path.GetFullPath("Packages/games.makotostudio.debugger");

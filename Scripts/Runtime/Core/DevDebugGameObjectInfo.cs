@@ -1,14 +1,15 @@
-﻿using System;
-using MakotoStudio.Debugger.Models;
+﻿using MakotoStudio.Debugger.Models;
 using MakotoStudio.Debugger.Utils;
 using MakotoStudio.Debugger.Views;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace MakotoStudio.Debugger.Core {
+	/// <summary>
+	/// Contains and hold Debug Game Object Information
+	/// </summary>
 	public class DevDebugGameObjectInfo : MonoBehaviour {
 		[SerializeField] private TMP_Text gameObjectName;
 		[SerializeField] private TMP_Text gameObjectTag;

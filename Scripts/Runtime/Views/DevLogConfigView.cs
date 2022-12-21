@@ -8,6 +8,9 @@ using UnityEngine.UI;
 using UDebug = UnityEngine.Debug;
 
 namespace MakotoStudio.Debugger.Views {
+	/// <summary>
+	/// Log Config view, displays configuration options 
+	/// </summary>
 	public class DevLogConfigView : MonoBehaviour, IViewOrder {
 		[SerializeField] private Dropdown logLevelDropdown;
 		[SerializeField] private Button btnDevLogOutputView;

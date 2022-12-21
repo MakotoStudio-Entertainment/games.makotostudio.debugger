@@ -1,6 +1,6 @@
 {
   "name": "games.makotostudio.debugger",
-  "version": "0.2.0-preview",
+  "version": "0.9.0-preview",
   "description": "Unity advanced custom logger from Makoto Studio - improved logging with with formatted log out put time stamp and class reference override the default Unity Debug log or replace it completely. For more information see Documentation",
   "displayName": "Makoto Studio Debugger",
   "unity": "2021.3",
@@ -9,8 +9,8 @@
     "email": "games@makotostudio.ch",
     "url": "https://www.makotostudio.ch"
   },
-  "changelogUrl": "https://unity-packages.makotostudio.ch/MakotoStudioLogger/Changelog",
-  "documentationUrl": "https://unity-packages.makotostudio.ch/MakotoStudioLogger/Overview",
+  "changelogUrl": "https://unity-debugger.makotostudio.ch/doc/changelog.html",
+  "documentationUrl": "https://unity-debugger.makotostudio.ch",
   "hideInEditor": false,
   "keywords": [],
   "dependencies": {

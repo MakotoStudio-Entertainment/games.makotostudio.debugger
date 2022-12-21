@@ -4,6 +4,9 @@ using MakotoStudio.Debugger.Core;
 using UnityEngine;
 
 namespace MakotoStudio.Debugger.Models {
+	/// <summary>
+	/// Hold the overall Debugger setting information
+	/// </summary>
 	[Serializable]
 	public class DevDebugObjectInformation {
 		[SerializeField] private GameObject gameObject;

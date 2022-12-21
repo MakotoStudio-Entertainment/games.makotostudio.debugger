@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using MakotoStudio.Debugger.Interfaces;
 using MakotoStudio.Debugger.Utils;
 using TMPro;
@@ -8,6 +7,9 @@ using UnityEngine.UI;
 using UObject = UnityEngine.Object;
 
 namespace MakotoStudio.Debugger.Views {
+	/// <summary>
+	/// Log Output view, displays the unity Debug. log prints  
+	/// </summary>
 	public class DevLogOutputView : MonoBehaviour, IViewOrder {
 		[Header("Log View")] [SerializeField] private TMP_Text logOutputText;
 

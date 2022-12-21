@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
 namespace MakotoStudio.Debugger.ScriptableObjects {
+	/// <summary>
+	/// Material - Tag configuration holder 
+	/// </summary>
 	public class MsMaterialSettings : ScriptableObject {
 		[Space(20)]
 		[Header("Default Material")]

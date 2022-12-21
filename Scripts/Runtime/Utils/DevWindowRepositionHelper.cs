@@ -5,6 +5,9 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace MakotoStudio.Debugger.Utils {
+	/// <summary>
+	/// Window position helper class, this allows us to drag and drop the views and still stay inside the canvas view
+	/// </summary>
 	public class DevWindowRepositionHelper : MonoBehaviour, IDragHandler, IBeginDragHandler, IPointerClickHandler {
 		[SerializeField] private RectTransform rootWindow;
 		[SerializeField] private Button btnClose;

@@ -3,11 +3,15 @@ using MakotoStudio.Debugger.Models;
 using UnityEngine;
 
 namespace MakotoStudio.Debugger.ScriptableObjects {
+	/// <summary>
+	/// Debugger Settings Configuration information holder
+	/// </summary>
 	public class MsDebuggerSettings : ScriptableObject {
 		[Header("General Config")]
 		[SerializeField] private LogType logType;
 		[SerializeField] private string logPath;
-
+		[SerializeField] private LayerMask layerMaskField;
+		
 		[Header("Special Settings")]
 		[SerializeField] private List<string> componentsToIgnoreList;
 		[SerializeField] private List<string> componentsNotDisableList;
@@ -18,7 +22,7 @@ namespace MakotoStudio.Debugger.ScriptableObjects {
 
 
 		/// <summary>
-		/// LogType Property
+		/// Configured LogType Property
 		/// </summary>
 		public LogType LogType {
 			get => logType;
@@ -26,7 +30,7 @@ namespace MakotoStudio.Debugger.ScriptableObjects {
 		}
 
 		/// <summary>
-		/// LogPath Property
+		/// Configured LogPath Property
 		/// </summary>
 		public string LogPath {
 			get {
@@ -40,7 +44,15 @@ namespace MakotoStudio.Debugger.ScriptableObjects {
 		}
 
 		/// <summary>
-		/// ComponentsToIgnoreList Property
+		/// Configured LayerMask to ignore
+		/// </summary>
+		public LayerMask LayerMaskField {
+			get => layerMaskField;
+			set => layerMaskField = value;
+		}
+
+		/// <summary>
+		/// Configured ComponentsToIgnoreList Property
 		/// </summary>
 		public List<string> ComponentsToIgnoreList {
 			get => componentsToIgnoreList;
@@ -48,7 +60,7 @@ namespace MakotoStudio.Debugger.ScriptableObjects {
 		}
 
 		/// <summary>
-		/// ComponentsNotDisableList Property
+		/// Configured ComponentsNotDisableList Property
 		/// </summary>
 		public List<string> ComponentsNotDisableList {
 			get => componentsNotDisableList;
@@ -56,7 +68,7 @@ namespace MakotoStudio.Debugger.ScriptableObjects {
 		}
 
 		/// <summary>
-		/// PropertiesToIgnore Property
+		/// Configured PropertiesToIgnore Property
 		/// </summary>
 		public List<string> PropertiesToIgnore {
 			get => propertiesToIgnore;
@@ -64,7 +76,7 @@ namespace MakotoStudio.Debugger.ScriptableObjects {
 		}
 
 		/// <summary>
-		/// DebugObjectTagColors Property
+		/// Configured DebugObjectTagColors Property
 		/// </summary>
 		public List<DebugObjectColor> DebugObjectTagColors {
 			get => debugObjectTagColors;

@@ -7,6 +7,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace MakotoStudio.Debugger.Views {
+	/// <summary>
+	/// Game Object list view, displays all game object in current loaded scene
+	/// </summary>
 	public class DevGameObjectListView : MonoBehaviour, IViewOrder {
 		[Space(20)] [Header("Scroll Views")] [Header("Game Object View")] [SerializeField]
 		private Button btnListAllGameObjects;

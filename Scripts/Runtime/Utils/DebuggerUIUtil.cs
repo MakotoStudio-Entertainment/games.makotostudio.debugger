@@ -3,6 +3,9 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace MakotoStudio.Debugger.Utils {
+	/// <summary>
+	/// Debugger Utils class
+	/// </summary>
 	public static class DebuggerUIUtil {
 		/// <summary>
 		///  Set the Unity Action to the button

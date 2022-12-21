@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
-using MakotoStudio.Debugger.Utils;
+﻿using MakotoStudio.Debugger.Utils;
 using UnityEngine;
 
 namespace MakotoStudio.Debugger.Core {
+	/// <summary>
+	/// Place this script on game objects you want to high-light
+	/// </summary>
 	public class MsDebuggerGameObject : MonoBehaviour {
 		private Material m_Material;
 		private bool m_IsNewAdded;
@@ -17,7 +19,7 @@ namespace MakotoStudio.Debugger.Core {
 		}
 
 		/// <summary>
-		/// 
+		/// Resets the high light state and resets the material to the original material
 		/// </summary>
 		public void OnResetHighLightEvent() {
 			var meshRenderer = this.gameObject.GetComponent<MeshRenderer>();
@@ -30,11 +32,11 @@ namespace MakotoStudio.Debugger.Core {
 
 			m_IsHighLighted = false;
 		}
-		
+
 		/// <summary>
-		///  
+		///  Apply the high light state if tag has no material configured the given material will be used
 		/// </summary>
-		/// <param name="material"></param>
+		/// <param name="material">Default Material if no material is configured for this game object tag</param>
 		public void OnHighLightEvent(Material material) {
 			var meshRenderer = this.gameObject.GetComponent<MeshRenderer>();
 			var match = DevDebuggerSettingManager.Singleton.MsDebuggerSettings.DebugObjectTagColors.Find(m =>

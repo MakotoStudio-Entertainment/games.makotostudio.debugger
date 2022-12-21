@@ -6,24 +6,34 @@ using UnityEngine.UI;
 using UObject = UnityEngine.Object;
 
 namespace MakotoStudio.Debugger.Core.PropertyTypes {
+	/// <summary>
+	/// Manages the Readonly type Property Type View
+	/// </summary>
 	public class DevReadonlyPropertyTypeView : MonoBehaviour, IPropertyType {
 		[SerializeField] private TMP_Text propertyValue;
 
 		private bool m_LiveValueUpdate;
-
 		private DevComponentProperty m_DevComponentProperty;
 		private Toggle m_LiveViewToggle;
-
 		private PropertyInfo m_PropertyInfo;
 		private UObject m_Obj;
 		private string m_PropertyValue;
 
+		/// <summary>
+		///  Set Property info and the object of the proprty
+		/// </summary>
+		/// <param name="propertyInfo">Property info</param>
+		/// <param name="obj">The Object of the property holder</param>
 		public void SetPropertyInfo(PropertyInfo propertyInfo, UObject obj) {
 			m_PropertyInfo = propertyInfo;
 			m_Obj = obj;
 			SetValue();
 		}
 
+		/// <summary>
+		///  Set if live update the value of the property
+		/// </summary>
+		/// <param name="state">Change the live update state</param>
 		public void SetLiveUpdate(bool state) {
 			m_LiveViewToggle.isOn = state;
 		}

@@ -5,24 +5,35 @@ using UnityEngine.UI;
 using UObject = UnityEngine.Object;
 
 namespace MakotoStudio.Debugger.Core.PropertyTypes {
+	/// <summary>
+	/// Manages the Integer type Property Type View
+	/// </summary>
 	public class DevIntegerPropertyTypeView : MonoBehaviour, IPropertyType {
 		[SerializeField] private InputField valueInput;
-		
-		private bool m_LiveValueUpdate;
 
+		private bool m_LiveValueUpdate;
 		private DevComponentProperty m_DevComponentProperty;
 		private Toggle m_LiveViewToggle;
-
 		private PropertyInfo m_PropertyInfo;
 		private UObject m_Obj;
 		private int m_Integer;
 
+		/// <summary>
+		///  Set Property info and the object of the proprty
+		/// </summary>
+		/// <param name="propertyInfo">Property info</param>
+		/// <param name="obj">The Object of the property holder</param>
 		public void SetPropertyInfo(PropertyInfo propertyInfo, UObject obj) {
 			m_PropertyInfo = propertyInfo;
 			m_Obj = obj;
 			SetValue();
 		}
 
+		/// <summary>
+		///  Set Property info and the object of the proprty
+		/// </summary>
+		/// <param name="propertyInfo">Property info</param>
+		/// <param name="obj">The Object of the property holder</param>
 		public void SetLiveUpdate(bool state) {
 			m_LiveViewToggle.isOn = state;
 		}
@@ -55,7 +66,6 @@ namespace MakotoStudio.Debugger.Core.PropertyTypes {
 			inputChangeEvent.AddListener(InputFiledChangeEvent);
 
 			valueInput.onValueChanged = inputChangeEvent;
-
 		}
 
 		private void InputFiledChangeEvent(string arg0) {

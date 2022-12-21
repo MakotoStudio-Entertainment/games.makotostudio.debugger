@@ -2,28 +2,38 @@
 using MakotoStudio.Debugger.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
-using Object = UnityEngine.Object;
+using UObject = UnityEngine.Object;
 
 namespace MakotoStudio.Debugger.Core.PropertyTypes {
+	/// <summary>
+	/// Manages the Vector2 type Property Type View
+	/// </summary>
 	public class DevVector2PropertyTypeView : MonoBehaviour, IPropertyType {
 		[SerializeField] private InputField xValueInput;
 		[SerializeField] private InputField yValueInput;
 
 		private bool m_LiveValueUpdate;
-
 		private DevComponentProperty m_DevComponentProperty;
 		private Toggle m_LiveViewToggle;
-
 		private PropertyInfo m_PropertyInfo;
-		private UnityEngine.Object m_Obj;
+		private UObject m_Obj;
 		private Vector2 m_Vector;
 
-		public void SetPropertyInfo(PropertyInfo propertyInfo, Object obj) {
+		/// <summary>
+		///  Set Property info and the object of the proprty
+		/// </summary>
+		/// <param name="propertyInfo">Property info</param>
+		/// <param name="obj">The Object of the property holder</param>
+		public void SetPropertyInfo(PropertyInfo propertyInfo, UObject obj) {
 			m_PropertyInfo = propertyInfo;
 			m_Obj = obj;
 			SetValue();
 		}
-			
+
+		/// <summary>
+		///  Set if live update the value of the property
+		/// </summary>
+		/// <param name="state">Change the live update state</param>
 		public void SetLiveUpdate(bool state) {
 			m_LiveViewToggle.isOn = state;
 		}

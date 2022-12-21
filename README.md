@@ -1,9 +1,9 @@
-# Makoto Debugger Pro - Package
+# Makoto Studio Debugger - Package
 
 
-[![Manual](https://img.shields.io/badge/docs-Manual-informational.svg)](https://unity-packages.makotostudio.ch/MakotoStudioDebugger/Overview)
+[![Manual](https://img.shields.io/badge/docs-Manual-informational.svg)](https://unity-debugger.makotostudio.ch/doc/intro.html)
 
-[![Roadmap](https://img.shields.io/badge/docs-Roadmap-yellowgreen.svg)](https://unity-packages.makotostudio.ch/MakotoStudioDebugger/Roadmap)
+[![Roadmap](https://img.shields.io/badge/docs-Roadmap-yellowgreen.svg)](https://unity-debugger.makotostudio.ch/doc/roadmap.html)
 
 ![GitHub issues](https://img.shields.io/github/issues-raw/MakotoStudio-Games/games.makotostudio.debugger)
 

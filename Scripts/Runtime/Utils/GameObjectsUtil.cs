@@ -3,23 +3,26 @@ using System.Linq;
 using UnityEngine;
 
 namespace MakotoStudio.Debugger.Utils {
+	/// <summary>
+	/// Overall Game Object util
+	/// </summary>
 	public static class GameObjectsUtil {
 		/// <summary>
-		///  Find all game objects in current scene expect game objects with the DevIgnore layer mask
+		///  Find all game objects in current scene expect game objects with the configured ignore layer mask
 		/// </summary>
-		/// <param name="layerName"></param>
 		/// <returns>List of GameObject in current scene</returns>
 		public static List<GameObject> GetAllGameObjectsInScene() {
 			var gos = new List<GameObject>();
 			var root = Object.FindObjectsOfType(typeof(GameObject)).ToList();
-			int layerIgnore = LayerMask.NameToLayer("DevIgnore");
+			var layerMaskIgnore = DevDebuggerSettingManager.Singleton.MsDebuggerSettings.LayerMaskField;
 			root.ForEach(obj => {
 				var go = (GameObject) obj;
-				if (go.layer != layerIgnore) {
-					gos.Add(go);
-					if (go.transform.childCount > 0) {
-						gos.AddRange(GetChildren(go));
-					}
+				if (layerMaskIgnore == (layerMaskIgnore | (1 << go.layer)))
+					return;
+				
+				gos.Add(go);
+				if (go.transform.childCount > 0) {
+					gos.AddRange(GetChildren(go));
 				}
 			});
 			return gos;

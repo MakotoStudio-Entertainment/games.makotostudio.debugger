@@ -2,6 +2,9 @@
 using UnityEngine;
 
 namespace MakotoStudio.Debugger.Utils {
+	/// <summary>
+	/// MonoBehaviour script for Debugger Setting holder 
+	/// </summary>
 	public class DevDebuggerSettingManager : MonoBehaviour {
 		private static DevDebuggerSettingManager _SINGLETON;
 		

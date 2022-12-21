@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using MakotoStudio.Debugger.Interfaces;
@@ -8,6 +7,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace MakotoStudio.Debugger.Core {
+	/// <summary>
+	/// Contains and hold Component Information of game object
+	/// </summary>
 	public class DevGameObjectComponentInfo : MonoBehaviour {
 		[SerializeField] private Text componentName;
 		[SerializeField] private GameObject prefabProperty;
@@ -94,7 +96,7 @@ namespace MakotoStudio.Debugger.Core {
 					return false;
 			}
 		}
-
+		
 		private bool SpecialComponent(string componentName) =>
 			DevDebuggerSettingManager.Singleton.MsDebuggerSettings.ComponentsNotDisableList.Find(c =>
 				componentName.ToLower().Equals(c.ToLower())) != null;

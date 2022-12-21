@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using UObject = UnityEngine.Object;
 
 namespace MakotoStudio.Debugger.Core {
+	/// <summary>
+	/// Component Property manager
+	/// </summary>
 	public class DevComponentProperty : MonoBehaviour {
 		[SerializeField] private Text propertyName;
 		[SerializeField] private Toggle liveValueViewToggle;
@@ -30,7 +33,7 @@ namespace MakotoStudio.Debugger.Core {
 		/// Instantiate Component Property
 		/// </summary>
 		/// <param name="propertyInfo">Property info</param>
-		/// <param name="obj">Unity Object from the component</param>
+		/// <param name="obj">Object from the component</param>
 		/// <returns>Property type</returns>
 		public IPropertyType Init(PropertyInfo propertyInfo, UObject obj) {
 			liveValueViewToggle.isOn = false;

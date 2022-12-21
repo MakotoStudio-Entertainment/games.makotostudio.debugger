@@ -2,6 +2,9 @@
 using UnityEngine;
 
 namespace MakotoStudio.Debugger.Models {
+	/// <summary>
+	/// Hold the name and material information 
+	/// </summary>
 	[Serializable]
 	public class DebugObjectColor {
 		[SerializeField] private string name;

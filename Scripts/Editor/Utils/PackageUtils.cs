@@ -7,9 +7,9 @@ namespace MakotoStudio.Debugger.Editor.Utils {
 		/// Start Import the package resources
 		/// </summary>
 		public static void ImportResources() {
-			var packageFullPath = EditorUtils.PackageFullPath;
-			AssetDatabase.ImportPackage(packageFullPath + "/PackageResources/MakotoStudioDebuggerResources.unitypackage",
-				true);
+			var packageFullPath =
+				EditorUtils.PackageFullPath + "/PackageResources/MakotoStudioDebuggerResources.unitypackage";
+			AssetDatabase.ImportPackage(packageFullPath, true);
 		}
 	}
 }
